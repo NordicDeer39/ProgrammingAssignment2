@@ -1,26 +1,41 @@
+## [Put comments here that describe what your functions do]
+## Put comments here that give an overall description of what your
+## functions do
 
-
+## Write a short comment describing this function
+## I used of Mass package for calculate inverse of matrix
+library(Mass)
 makeCacheMatrix <- function(x = matrix) {
-  s <- NULL
+  #I set the initial value of the inverse to null:
+  inverse <- NULL
   set <- function(y) {
     x <<- y
-    s <<- NULL
+    inverse <<- NULL
   }
+  # get the matrix:
   get <- function() x
-  setsolve <- function(solve) s <<- solve
-  getsolve <- function() s
-  list(set = set, get = get,setsolve = setsolve,getsolve = getsolve)
+  setsolve <- function(solve) inverse <<- solve
+  getsolve <- function() inverse
+  list(set = set, 
+       get = get,
+       setsolve = setsolve,
+       getsolve = getsolve)
 }
 
-
+#wanna get the cache data, so write the following function:
 cacheSolve <- function(x, ...) {
-  s <- x$getsolve()
-  if(!is.null(s)) {
-    return(s)
+  inverse <- x$getsolve()
+  
+  if(!is.null(inverse)) {
+    message("getting inverse of the matrix...")
+    #return inverse of matrix
+    return(inverse)
+    
   }
   
+  ##calculate inverse of matrix:
   data <- x$get()
-  s <- solve(data, ...)
-  x$setsolve(s)
-  s
+  inverse <- solve(data, ...)
+  x$setsolve(inverse)
+  inverse
 }
